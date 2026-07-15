@@ -1,0 +1,11 @@
+google-cloud-aiplatform==1.60.0
+google-cloud-bigquery==3.25.0
+vertexai==1.60.0
+langchain==0.2.16
+langchain-google-vertexai==1.0.10
+langchain-community==0.2.16
+sqlalchemy-bigquery==1.17.0
+pyarrow
+streamlit==1.37.1
+pandas
+python-dotenv==1.0.1

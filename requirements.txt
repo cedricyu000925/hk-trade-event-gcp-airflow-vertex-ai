@@ -1,0 +1,10 @@
+apache-airflow
+apache-airflow-providers-google
+google-cloud-bigquery
+google-cloud-storage
+pandas
+pyarrow
+db-dtypes
+python-dotenv
+pytest
+ruff

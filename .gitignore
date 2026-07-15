@@ -1,0 +1,15 @@
+gcp-service-account-key.json
+.env
+logs/
+__pycache__/
+*.pyc
+.astro/
+docker-compose.override.yml
+include/
+Project Plan and Phases/
+venv/
+.dockerignore
+hk_trade_event_registrations.csv
+simulate_drop.py
+runbook.md
+*.json
