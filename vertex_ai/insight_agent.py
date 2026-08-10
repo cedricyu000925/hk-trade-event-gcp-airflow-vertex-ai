@@ -2,13 +2,12 @@
 # Demonstrates: LangChain chains, PromptTemplate, output parsing,
 # LLM-based narrative generation, structured business insights.
  
-from langchain_google_vertexai import ChatVertexAI
-from langchain_core.prompts import PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+from config import BQ_VIEW_MASTER, MODEL_NAME, PROJECT_ID, init_vertex
 from google.cloud import bigquery
-import pandas as pd
-from config import PROJECT_ID, LOCATION, MODEL_NAME, BQ_VIEW_MASTER, init_vertex
- 
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import PromptTemplate
+from langchain_google_vertexai import ChatVertexAI
+
 init_vertex()
  
  

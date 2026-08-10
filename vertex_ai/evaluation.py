@@ -3,13 +3,11 @@
 # PointwiseMetric, rubric design, evaluation dataset creation.
  
 import pandas as pd
-import vertexai
-from vertexai.evaluation import EvalTask, PointwiseMetric, PointwiseMetricPromptTemplate
-from google.cloud import aiplatform
-from config import PROJECT_ID, LOCATION, init_vertex
+from config import init_vertex
 from prompt_qa import ask_business_question
 from rag_pipeline import rag_answer
- 
+from vertexai.evaluation import EvalTask, PointwiseMetric, PointwiseMetricPromptTemplate
+
 init_vertex()
 EXPERIMENT_NAME = "hk-trade-event-llm-eval"
  

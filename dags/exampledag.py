@@ -20,9 +20,9 @@ first DAG tutorial: https://www.astronomer.io/docs/learn/get-started-with-airflo
 ![Picture of the ISS](https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2010/02/space_station_over_earth/10293696-3-eng-GB/Space_Station_over_Earth_card_full.jpg)
 """
 
+import requests
 from airflow.sdk import Asset, dag, task
 from pendulum import datetime
-import requests
 
 
 # Define the basic parameters of the DAG, like schedule and start_date
@@ -51,7 +51,7 @@ def example_astronauts():
             r.raise_for_status()
             number_of_people_in_space = r.json()["number"]
             list_of_people_in_space = r.json()["people"]
-        except Exception:
+        except (requests.exceptions.RequestException, KeyError, ValueError):
             print("API currently not available, using hardcoded data instead.")
             number_of_people_in_space = 12
             list_of_people_in_space = [

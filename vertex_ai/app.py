@@ -3,12 +3,12 @@
 # Run with: streamlit run vertex_ai/app.py
  
 import streamlit as st
-from prompt_qa     import ask_business_question
-from rag_pipeline  import rag_answer
-from insight_agent import generate_executive_summary
-from nl2sql        import ask_data_question
 from config import PROJECT_ID
- 
+from insight_agent import generate_executive_summary
+from nl2sql import ask_data_question
+from prompt_qa import ask_business_question
+from rag_pipeline import rag_answer
+
 st.set_page_config(
     page_title="HK Trade Event AI Assistant",
     page_icon="🤖",

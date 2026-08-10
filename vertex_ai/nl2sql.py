@@ -2,13 +2,13 @@
 # Demonstrates: LangChain SQL agent, Text-to-SQL, BigQuery SQLAlchemy,
 # agentic tool-use, natural language data access.
  
-from langchain_google_vertexai import ChatVertexAI
-from langchain_community.utilities import SQLDatabase
+from config import MODEL_NAME, PROJECT_ID, init_vertex
+from langchain.agents import AgentType, create_sql_agent
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
-from langchain.agents import create_sql_agent, AgentType
+from langchain_community.utilities import SQLDatabase
+from langchain_google_vertexai import ChatVertexAI
 from sqlalchemy import create_engine
-from config import PROJECT_ID, LOCATION, MODEL_NAME, init_vertex
- 
+
 init_vertex()
  
 # ── Connect LangChain to BigQuery via SQLAlchemy ──────────────────────────

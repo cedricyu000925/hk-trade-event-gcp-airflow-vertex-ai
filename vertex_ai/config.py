@@ -1,5 +1,6 @@
-import vertexai
 import os
+
+import vertexai
 
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 LOCATION = "us-central1"
