@@ -17,8 +17,8 @@ def load_sql(filename: str, project_id: str) -> str:
         return f.read().replace("{{ params.project_id }}", project_id)
 
 # ── Config ────────────────────────────────────────────────────────────────────
-GCP_PROJECT_ID  = "ID"          # ← replace with your actual project ID
-GCS_BUCKET      = "BUCKET"         # ← replace with your actual bucket name
+GCP_PROJECT_ID  = "second-chariot-479412-g1"          # ← replace with your actual project ID
+GCS_BUCKET      = "hk-trade-event-data-second-chariot-479412-g1"         # ← replace with your actual bucket name
 SOURCE_OBJECT   = "raw/hk_trade_event_registrations.csv"
 BQ_CONN         = "google_cloud_default"
 

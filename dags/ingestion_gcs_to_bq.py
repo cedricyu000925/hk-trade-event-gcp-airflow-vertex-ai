@@ -8,8 +8,8 @@ from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-GCP_PROJECT_ID  = "ID" # ← replace with your actual project ID
-GCS_BUCKET      = "BUCKET" # ← replace with your actual bucket name
+GCP_PROJECT_ID  = "second-chariot-479412-g1" # ← replace with your actual project ID
+GCS_BUCKET      = "hk-trade-event-data-second-chariot-479412-g1" # ← replace with your actual bucket name
 SOURCE_OBJECT   = "raw/hk_trade_event_registrations.csv"
 DEST_OBJECT     = "processed/hk_trade_event_registrations_{{ ds_nodash }}.csv"
 BQ_RAW_DATASET  = "raw"
