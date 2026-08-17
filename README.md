@@ -9,3 +9,5 @@ GCP, Airflow, BigQuery, Vertex AI, LangChain, Streamlit
 - `dags/` — Airflow DAG definitions
 - `include/sql/` — SQL transformation scripts
 - `docs/` — architecture, runbook, CI/CD documentation
+
+Testing CI trigger.

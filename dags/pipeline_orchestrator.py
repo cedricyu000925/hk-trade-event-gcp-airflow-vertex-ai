@@ -1,14 +1,18 @@
 import json
 import logging
-from datetime import datetime, timedelta
+import os
+from datetime import timedelta
 
 from airflow import DAG
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
-from airflow.providers.standard.operators.python import BranchPythonOperator
 from airflow.providers.standard.operators.empty import EmptyOperator
+from airflow.providers.standard.operators.python import BranchPythonOperator
+from dotenv import load_dotenv
 
-import os
+load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 def load_sql(filename: str, project_id: str) -> str:
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,8 +21,8 @@ def load_sql(filename: str, project_id: str) -> str:
         return f.read().replace("{{ params.project_id }}", project_id)
 
 # ── Config ────────────────────────────────────────────────────────────────────
-GCP_PROJECT_ID  = "ID"          # ← replace with your actual project ID
-GCS_BUCKET      = "BUCKET"         # ← replace with your actual bucket name
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]          # ← replace with your actual project ID
+GCS_BUCKET = os.environ["GCS_BUCKET_NAME"]         # ← replace with your actual bucket name
 SOURCE_OBJECT   = "raw/hk_trade_event_registrations.csv"
 BQ_CONN         = "google_cloud_default"
 
@@ -27,7 +31,7 @@ PARAMS = {"project_id": GCP_PROJECT_ID}
 # ── Default args (applies to every task) ─────────────────────────────────────
 def on_failure_alert(context):
     """Fires on any task failure — logs a structured failure record."""
-    logging.error(
+    logger.error(
         json.dumps({
             "event":    "task_failed",
             "dag_id":   context["dag"].dag_id,
@@ -111,9 +115,9 @@ with DAG(
         result = client.query(query).result()
         for row in result:
             if row.failure_count > 0:
-                logging.warning(f"DQ failures found: {row.failure_count} rows")
+                logger.warning(f"DQ failures found: {row.failure_count} rows")
                 return "dq_failed"
-        logging.info("All DQ checks passed.")
+        logger.info("All DQ checks passed.")
         return "transform_to_mart"
     
     dq_check_staging = BigQueryInsertJobOperator(

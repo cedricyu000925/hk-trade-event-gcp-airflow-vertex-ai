@@ -5,7 +5,6 @@ __pycache__/
 *.pyc
 .astro/
 docker-compose.override.yml
-include/
 Project Plan and Phases/
 venv/
 .dockerignore

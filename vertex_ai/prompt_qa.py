@@ -2,11 +2,10 @@
 # Demonstrates: prompt engineering, system instructions, context injection,
 # few-shot prompting, and structured output formatting with Vertex AI Gemini.
  
-import vertexai
-from vertexai.generative_models import GenerativeModel, Part
+from config import BQ_VIEW_MASTER, MODEL_NAME, PROJECT_ID, init_vertex
 from google.cloud import bigquery
-from config import PROJECT_ID, LOCATION, MODEL_NAME, BQ_VIEW_MASTER, init_vertex
- 
+from vertexai.generative_models import GenerativeModel
+
 init_vertex()
  
 # ── 1. Pull a data context snapshot from BigQuery ──────────────────────────

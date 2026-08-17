@@ -1,15 +1,17 @@
-import uuid
-from datetime import datetime, timedelta
+from datetime import timedelta  # standard library
 
+import pendulum  # third-party
 from airflow import DAG
-from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
-from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
-from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
+from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
+from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
+    GCSToBigQueryOperator,
+)
+from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-GCP_PROJECT_ID  = "ID" # ← replace with your actual project ID
-GCS_BUCKET      = "BUCKET" # ← replace with your actual bucket name
+GCP_PROJECT_ID  = "second-chariot-479412-g1" # ← replace with your actual project ID
+GCS_BUCKET      = "hk-trade-event-data-second-chariot-479412-g1" # ← replace with your actual bucket name
 SOURCE_OBJECT   = "raw/hk_trade_event_registrations.csv"
 DEST_OBJECT     = "processed/hk_trade_event_registrations_{{ ds_nodash }}.csv"
 BQ_RAW_DATASET  = "raw"
@@ -29,7 +31,7 @@ default_args = {
 with DAG(
     dag_id="ingestion_gcs_to_bq",
     description="Senses CSV in GCS raw/, loads into BigQuery raw dataset, logs metadata, moves file to processed/",
-    start_date=datetime(2024, 1, 1),
+    start_date=pendulum.datetime(2024, 1, 1, tz="Asia/Hong_Kong"),
     schedule=None,         # Triggered manually or by simulate_drop.py
     catchup=False,
     default_args=default_args,

@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   validate:
@@ -18,20 +19,44 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install ruff pytest
+          pip install ruff pytest sqlfluff bandit pip-audit
 
-      - name: Lint Python
+      - name: Lint Python (dags, tests, vertex_ai)
         run: |
-          ruff check dags/ tests/
+          ruff check dags/ tests/ vertex_ai/
 
-      - name: Validate syntax
+      - name: Validate DAG syntax
         run: |
           python -m py_compile dags/pipeline_orchestrator.py
+          python -m py_compile dags/ingestion_gcs_to_bq.py
+
+      - name: Validate Vertex AI module syntax
+        run: |
+          python -m py_compile vertex_ai/app.py
+          python -m py_compile vertex_ai/config.py
+          python -m py_compile vertex_ai/prompt_qa.py
+          python -m py_compile vertex_ai/rag_pipeline.py
+          python -m py_compile vertex_ai/insight_agent.py
+          python -m py_compile vertex_ai/nl2sql.py
+          python -m py_compile vertex_ai/evaluation.py
+
+      - name: Lint SQL templates
+        run: |
+          sqlfluff lint include/sql/ --dialect bigquery
+
+      - name: Security scan (bandit)
+        run: |
+          bandit -r dags/ vertex_ai/ -ll
+
+      - name: Dependency vulnerability scan
+        run: |
+          pip-audit -r requirements.txt || true
 
       - name: Run tests
         run: |
