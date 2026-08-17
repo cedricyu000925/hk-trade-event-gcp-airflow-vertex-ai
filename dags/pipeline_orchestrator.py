@@ -3,11 +3,14 @@ import logging
 import os
 from datetime import timedelta
 
+from dotenv import load_dotenv
 from airflow import DAG
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.providers.standard.operators.python import BranchPythonOperator
+
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -18,8 +21,8 @@ def load_sql(filename: str, project_id: str) -> str:
         return f.read().replace("{{ params.project_id }}", project_id)
 
 # ── Config ────────────────────────────────────────────────────────────────────
-GCP_PROJECT_ID  = "second-chariot-479412-g1"          # ← replace with your actual project ID
-GCS_BUCKET      = "hk-trade-event-data-second-chariot-479412-g1"         # ← replace with your actual bucket name
+GCP_PROJECT_ID = os.environ["GCP_PROJECT_ID"]          # ← replace with your actual project ID
+GCS_BUCKET = os.environ["GCS_BUCKET_NAME"]         # ← replace with your actual bucket name
 SOURCE_OBJECT   = "raw/hk_trade_event_registrations.csv"
 BQ_CONN         = "google_cloud_default"
 
