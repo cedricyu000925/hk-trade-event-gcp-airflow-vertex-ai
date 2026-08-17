@@ -8,3 +8,6 @@ db-dtypes
 python-dotenv
 pytest
 ruff
+sqlfluff
+bandit
+pip-audit
