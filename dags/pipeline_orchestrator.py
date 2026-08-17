@@ -3,12 +3,12 @@ import logging
 import os
 from datetime import timedelta
 
-from dotenv import load_dotenv
 from airflow import DAG
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.providers.standard.operators.python import BranchPythonOperator
+from dotenv import load_dotenv
 
 load_dotenv()
 
